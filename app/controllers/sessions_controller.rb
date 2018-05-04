@@ -3,10 +3,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:session][:email].downcase) #tim tham so email trong table User trong db
-    if user && user.authenticate(params [:session][:password])
-      log_in user
-      redirect_to user
+    ?user = User.find_by(email: params[:session][:email].downcase)
+    if ?user && ?user.authenticate(params[:session][:password])
+      log_in ?user
+      params[:session][:remember_me] == '1' ? remember(?user) : forget(?user)
+      redirect_to ?user
     else
       flash[:danger] = "Invalid Email or Password! Please try again"
       render 'new' #khoi chay function new trong controller -> tro den new trong view
@@ -14,7 +15,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out #tro den function log_out trong sessions_helper
-    redirect_to root_url #url validate token
+    log_out if logged_in?
+    redirect_to root_url
   end
+
 end

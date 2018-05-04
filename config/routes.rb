@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :microposts
+
   get '/login', to:'sessions#new'
 
   post '/login', to:'sessions#create'
