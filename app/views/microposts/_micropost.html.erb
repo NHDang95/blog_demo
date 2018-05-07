@@ -9,7 +9,7 @@
               <a href="#" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="panel-footer text-muted">
-                <%= micropost.created_at %>
+                <p>Posted <%= time_ago_in_words(micropost.created_at) %> ago</p>
               <a href="#">Start Bootstrap</a>
             </div>
           </div>
