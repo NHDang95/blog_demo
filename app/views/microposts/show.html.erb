@@ -14,7 +14,7 @@
           <!-- Author -->
           <p class="lead">
             by
-            <a href="#">Start Bootstrap</a>
+              <%= link_to "#{@micropost.user.name}", user_url %>
           </p>
 
           <hr>
@@ -25,41 +25,41 @@
           <hr>
 
           <!-- Preview Image -->
-          <img class="img-fluid rounded" src="<%=@micropost.image_url%>" alt="panel image cap">
+          <!-- <img class="img-fluid rounded" src="<%=@micropost.image_url%>" alt="panel image cap"> -->
 
           <hr>
 
           <!-- Post Content -->
-          <p class="lead">  <%= @micropost.content %></p>
+          <!-- <p class="lead">  <%= @micropost.content %></p> -->
 
           <blockquote class="blockquote">
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <footer class="blockquote-footer">Someone famous in
-              <cite title="Source Title">Source Title</cite>
+            <p class="mb-0">  <%= @micropost.content %></p>
+            <footer class="blockquote-footer">Written by
+              <cite title="Source Title">  <%= @micropost.user.name %></cite>
             </footer>
           </blockquote>
           <hr>
 
           <!-- Comments Form -->
-          <div class="panel panel-default my-4">
+          <!-- <div class="panel panel-default my-4">
             <h5 class="panel-header">Leave a Comment:</h5>
             <div class="panel-body">
-              <form>
-                <div class="form-group">
-                  <textarea class="form-control" rows="3"></textarea>
+                <%#= form_for(@comment) do |f| %>
+                <div class="field">
+                  <%#= f.text_area :content, placeholder: "Create New Comment..." %>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+                  <%#= hidden_field_tag :id, @micropost.id %>
+                  <%#= f.submit "Create comment", class: "btn btn-primary" %>
             </div>
           </div>
-
+  <%# end %> -->
             <%= render @comments %>
 
         <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
 
           <!-- Search Widget -->
-          <div class="panel my-4">
+          <!-- <div class="panel my-4">
             <h5 class="panel-header">Search</h5>
             <div class="panel-body">
               <div class="input-group">
@@ -69,10 +69,10 @@
                 </span>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Categories Widget -->
-          <div class="panel my-4">
+<!--           <div class="panel my-4">
             <h5 class="panel-header">Categories</h5>
             <div class="panel-body">
               <div class="row">
@@ -106,19 +106,19 @@
             </div>
           </div>
 
-          <!-- Side Widget -->
-          <div class="panel my-4">
+ -->          <!-- Side Widget -->
+          <!-- <div class="panel my-4">
             <h5 class="panel-header">Side Widget</h5>
             <div class="panel-body">
-              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 panel containers!
-            </div>
-          </div>
+              You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 panel containers! -->
+            <!-- </div>
+          </div> -->
 
-        </div>
+        <!-- </div>
 
-      </div>
+      </div> -->
       <!-- /.row -->
 
     </div>
     <!-- /.container -->
-<% byebug %>
+<%# byebug %>
