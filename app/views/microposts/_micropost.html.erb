@@ -5,7 +5,9 @@
               <%#= image_tag micropost.image_url, class: "panel-img-top" %>
             <div class="panel-body">
               <h2 class="panel-title">  <%= micropost.title %></h2>
-              <p class="panel-text">  <%= micropost.content %></p>
+              <p class="panel-text">  <%= micropost.content %>
+                  <%= image_tag micropost.picture.url if micropost.picture? %>
+              </p>
                 <%= link_to "Read More", micropost ,class: "btn btn-primary"%>
             </div>
             <div class="panel-footer text-muted">

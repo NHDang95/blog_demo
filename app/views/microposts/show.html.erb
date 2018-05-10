@@ -30,29 +30,29 @@
           <hr>
 
           <!-- Post Content -->
-          <!-- <p class="lead">  <%= @micropost.content %></p> -->
+          <p class="lead">  <%= @micropost.content %></p>
 
-          <blockquote class="blockquote">
-            <p class="mb-0">  <%= @micropost.content %></p>
+          <!-- <blockquote class="blockquote">
+            <p class="mb-0">  <%#= @micropost.content %></p>
             <footer class="blockquote-footer">Written by
-              <cite title="Source Title">  <%= @micropost.user.name %></cite>
+              <cite title="Source Title">  <%#= @micropost.user.name %></cite>
             </footer>
-          </blockquote>
+          </blockquote> -->
           <hr>
 
           <!-- Comments Form -->
-          <!-- <div class="panel panel-default my-4">
+          <div class="panel panel-default my-4">
             <h5 class="panel-header">Leave a Comment:</h5>
             <div class="panel-body">
-                <%#= form_for(@comment) do |f| %>
+                <%= form_for(@comment) do |f| %>
                 <div class="field">
-                  <%#= f.text_area :content, placeholder: "Create New Comment..." %>
+                  <%= f.text_area :content, placeholder: "Create New Comment..." %>
                 </div>
-                  <%#= hidden_field_tag :id, @micropost.id %>
-                  <%#= f.submit "Create comment", class: "btn btn-primary" %>
+                  <%= f.hidden_field :micropost_id ,value: @micropost.id %>
+                  <%= f.submit "Create comment", class: "btn btn-primary" %>
             </div>
           </div>
-  <%# end %> -->
+  <% end %>
             <%= render @comments %>
 
         <!-- Sidebar Widgets Column -->

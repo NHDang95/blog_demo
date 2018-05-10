@@ -8,6 +8,7 @@ class MicropostsController < ApplicationController
   def show
     @micropost = Micropost.find_by(id: params[:id])
     @comments = @micropost.comments
+    @comment = Comment.new
   end
 
   def new
@@ -39,7 +40,7 @@ class MicropostsController < ApplicationController
   private
 
   def micropost_params
-    params.require(:micropost).permit(:title,:content)
+    params.require(:micropost).permit(:title, :content, :picture)
   end
 
   def correct_user

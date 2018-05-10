@@ -38,6 +38,9 @@ gem 'bootstrap-sass', '3.3.7'
 
 gem 'font-awesome-rails'
 
+gem 'carrierwave',             '1.2.2'
+gem 'mini_magick',             '4.7.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
