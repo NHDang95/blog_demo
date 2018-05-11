@@ -17,12 +17,8 @@
               <%= link_to "#{@micropost.user.name}", user_url %>
           </p>
 
-          <hr>
-
           <!-- Date/Time -->
-          <p>  Posted <%= time_ago_in_words(@micropost.created_at) %> ago</p>
-
-          <hr>
+          <small>  Posted <%= time_ago_in_words(@micropost.created_at) %> ago</small>
 
           <!-- Preview Image -->
           <!-- <img class="img-fluid rounded" src="<%=@micropost.image_url%>" alt="panel image cap"> -->
