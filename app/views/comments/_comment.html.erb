@@ -1,12 +1,24 @@
-<div class="media mb-4">
-    <div class="media-body">
-        <div class="media-heading"><h5 class="mt-0">  <%= comment.user.name %></h5></div>
-              <div class="mt-4"><%= comment.content %></div>
-    </div>
+<ul class="media-list">
+  <li class="media">
 
-    <div>
-        <div class="media-heading"><h5 class="mt-0">   <%= comment.user.name %></h5></div>
-              <div class="mt-8">something there</div>
-    </div>
+        <div class="media-left">
+            <a href="#">comment1</a>
+        </div>
+        <div class="media-body">
+              <h4 class="media-heading"><%= comment.user.name %></h4>
+              <p><%= comment.content %></p>
+        <p>  <%= link_to "Reply" %>  </p>
 
-</div>
+    <div class="media">
+        <div class="media-left">
+            <a href="#">comment2</a>
+        </div>
+        <div class="media-body">
+              <h4 class="media-heading"><%=%></h4>
+              <p>something there</p>
+              </div>
+    </div>
+  </div>
+
+</li>
+</ul>
