@@ -6,7 +6,11 @@ class UsersController < ApplicationController
   end
 
   def show
-      @user = User.find(params[:id])
+      @user = User.find_by id: params[:id]
+      if @user.nil?
+        redirect_to root_url
+        return
+      end
       @microposts = @user.microposts
   end
 
@@ -26,7 +30,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by id: params[:id]
+
+
   end
 
   def update
@@ -40,14 +46,14 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
     @users = @user.following
     render 'show_follow'
   end
 
   def followers
     @title = "Followers"
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
     @users = @user.followers
     render 'show_follow'
   end
@@ -60,7 +66,7 @@ class UsersController < ApplicationController
   end
 
   def correct_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
     redirect_to(root_url) unless @user == current_user
   end
 

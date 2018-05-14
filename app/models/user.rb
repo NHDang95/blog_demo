@@ -12,7 +12,9 @@ class User < ApplicationRecord
   has_many :microposts
   before_save { self.email = email.downcase }
   validates :name,  presence: true, length: { maximum: 50 }
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
@@ -45,11 +47,11 @@ class User < ApplicationRecord
 
   # Forgets a user.
   def forget
-    update_attribute(:remember_digest, nil)
+    update_attributes(:remember_digest, nil)
   end
 
   def feed
-     Micropost.where("user_id IN (?) OR user_id = ?", following_ids, id)
+     Micropost.feed(following_ids, id)  #user.following_ids & user_id
   end
 
   def follow(other_user)
