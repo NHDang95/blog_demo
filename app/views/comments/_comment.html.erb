@@ -1,17 +1,13 @@
 <ul class="media-list">
-  <li class="media">
+  <li class="media comment-item">
 
-        <div class="media-left">
+        <div class="media-left gravatar-image">
             <%= gravatar_for comment.user %>
         </div>
-        <div class="media-body">
+        <div class="media-body comment-content">
               <h4 class="media-heading"><%= comment.user.name %></h4>
               <p><%= comment.content %></p>
               <small>Submitted <%= time_ago_in_words(comment.created_at) %> ago</small>
-          <%= form_for [comment, Comment.new] do |f| %>
-            <%= f.text_area :content, placeholder: "Add a reply" %><br/>
-              <%= f.submit "Reply" %>
-                <% end %>
 
   <ul>
 

@@ -289,3 +289,28 @@ span.picture {
     height: 400px;
   }
 }
+
+.gravatar-image {
+  img {
+    width: 100% !important;
+    height: 100px !important;
+  }
+}
+
+.comment-content {
+  width: 80% !important;
+  padding-left: 10px;
+
+  p {
+    word-break: break-all;
+    white-space: break-spaces;
+  }
+}
+
+.comment-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
