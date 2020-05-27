@@ -1,7 +1,7 @@
 <title>  <%= provide(:title,"Show") %></title>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container micropost-show">
 
       <div class="row">
 
@@ -26,7 +26,7 @@
           <hr>
 
           <!-- Post Content -->
-          <p class="lead">  <%= @micropost.content %></p>
+          <p class="lead">  <%= @micropost.content.html_safe %></p>
 
           <!-- <blockquote class="blockquote">
             <p class="mb-0">  <%#= @micropost.content %></p>

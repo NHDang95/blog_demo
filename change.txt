@@ -1,0 +1,191 @@
+diff --git a/Gemfile b/Gemfile
+index d1f3093..b74c5c8 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -19,6 +19,7 @@ gem 'sass-rails', '~> 5.0'
+ gem 'uglifier', '>= 1.3.0'
+ # See https://github.com/rails/execjs#readme for more supported runtimes
+ # gem 'therubyracer', platforms: :ruby
++gem 'tinymce-rails'
+ 
+ # Use CoffeeScript for .coffee assets and views
+ gem 'coffee-rails', '~> 4.2'
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9dbde61..a60e53b 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -173,6 +173,8 @@ GEM
+     thor (0.20.0)
+     thread_safe (0.3.6)
+     tilt (2.0.8)
++    tinymce-rails (5.3.0)
++      railties (>= 3.1.1)
+     turbolinks (5.1.1)
+       turbolinks-source (~> 5.1)
+     turbolinks-source (5.1.0)
+@@ -213,10 +215,11 @@ DEPENDENCIES
+   spring
+   spring-watcher-listen (~> 2.0.0)
+   sqlite3
++  tinymce-rails
+   turbolinks (~> 5)
+   tzinfo-data
+   uglifier (>= 1.3.0)
+   web-console (>= 3.3.0)
+ 
+ BUNDLED WITH
+-   1.16.1
++   2.1.4
+diff --git a/app/assets/stylesheets/custom.scss b/app/assets/stylesheets/custom.scss
+index 17d73ea..113ff88 100644
+--- a/app/assets/stylesheets/custom.scss
++++ b/app/assets/stylesheets/custom.scss
+@@ -28,7 +28,12 @@ textarea {
+ 
+ /* typography */
+ 
+-h1, h2, h3, h4, h5, h6 {
++h1,
++h2,
++h3,
++h4,
++h5,
++h6 {
+   line-height: 1;
+ }
+ 
+@@ -53,7 +58,6 @@ p {
+   line-height: 1.7em;
+ }
+ 
+-
+ /* header */
+ 
+ #logo {
+@@ -95,9 +99,9 @@ footer {
+       margin-left: 15px;
+     }
+   }
+-  }
++}
+ 
+-  /* sidebar */
++/* sidebar */
+ 
+ aside {
+   section.user_info {
+@@ -136,7 +140,10 @@ aside {
+ 
+ /* forms */
+ 
+-input, textarea, select, .uneditable-input {
++input,
++textarea,
++select,
++.uneditable-input {
+   border: 1px solid #bbb;
+   width: 100%;
+   margin-bottom: 15px;
+@@ -218,6 +225,11 @@ input {
+     margin-right: 10px;
+     margin-top: 5px;
+   }
++
++  img {
++    width: 100%;
++    height: 400px;
++  }
+ }
+ 
+ aside {
+@@ -270,3 +282,10 @@ span.picture {
+ .users.follow {
+   padding: 0;
+ }
++
++.micropost-show {
++  img {
++    width: 100%;
++    height: 400px;
++  }
++}
+diff --git a/app/models/user.rb b/app/models/user.rb
+index f76ba3a..17e26e9 100644
+--- a/app/models/user.rb
++++ b/app/models/user.rb
+@@ -47,7 +47,7 @@ class User < ApplicationRecord
+ 
+   # Forgets a user.
+   def forget
+-    update_attributes(:remember_digest, nil)
++    update_attributes(remember_digest: nil)
+   end
+ 
+   def feed
+diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
+index 9e97249..04bc5c0 100644
+--- a/app/views/layouts/application.html.erb
++++ b/app/views/layouts/application.html.erb
+@@ -7,6 +7,9 @@
+     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+       <%= render 'layouts/shim' %>
++
++    <%= tinymce_assets %>
++    <script type="text/javascript" src="/assets/tinymce.js"></script>
+   </head>
+ 
+   <body>
+diff --git a/app/views/microposts/_micropost.html.erb b/app/views/microposts/_micropost.html.erb
+index deaa883..4a4b2c5 100644
+--- a/app/views/microposts/_micropost.html.erb
++++ b/app/views/microposts/_micropost.html.erb
+@@ -5,7 +5,7 @@
+               <%#= image_tag micropost.image_url, class: "panel-img-top" %>
+             <div class="panel-body">
+               <h2 class="panel-title">  <%= micropost.title %></h2>
+-              <p class="panel-text">  <%= micropost.content %>
++              <p class="panel-text">  <%= micropost.content.html_safe %>
+                   <%= image_tag micropost.picture.url if micropost.picture? %>
+               </p>
+                 <%= link_to "Read More", micropost ,class: "btn btn-primary"%>
+diff --git a/app/views/microposts/show.html.erb b/app/views/microposts/show.html.erb
+index 5e56771..784e365 100644
+--- a/app/views/microposts/show.html.erb
++++ b/app/views/microposts/show.html.erb
+@@ -1,7 +1,7 @@
+ <title>  <%= provide(:title,"Show") %></title>
+ 
+     <!-- Page Content -->
+-    <div class="container">
++    <div class="container micropost-show">
+ 
+       <div class="row">
+ 
+@@ -26,7 +26,7 @@
+           <hr>
+ 
+           <!-- Post Content -->
+-          <p class="lead">  <%= @micropost.content %></p>
++          <p class="lead">  <%= @micropost.content.html_safe %></p>
+ 
+           <!-- <blockquote class="blockquote">
+             <p class="mb-0">  <%#= @micropost.content %></p>
+diff --git a/app/views/shared/_micropost_form.html.erb b/app/views/shared/_micropost_form.html.erb
+index 4668771..f08ae89 100644
+--- a/app/views/shared/_micropost_form.html.erb
++++ b/app/views/shared/_micropost_form.html.erb
+@@ -1,10 +1,11 @@
+ <%= form_for(@micropost) do |f| %>
+           <%= render 'shared/error_messages',object: f.object %>
+           <div class="field">
+-            <%= f.text_area :title, placeholder: "Title" %>
++            <%= f.text_area :title, placeholder: "title..." %>
+           </div>
+               <div class="field">
+-                <%= f.text_area :content, placeholder: "Create new micropost..." %>
++                <%= f.text_area :content, placeholder: "content...", class: 'tinymce' %>
++                <%= tinymce %>
+               </div>
+             <%= f.submit "Create", class: "btn btn-primary" %>
+             <span class="picture">
